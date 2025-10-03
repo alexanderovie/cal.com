@@ -31,7 +31,7 @@ Support for this image can be found via the repository, located at [https://gith
 
 # Docker
 
-This image can be found on DockerHub at [https://hub.docker.com/r/calcom/cal.com](https://hub.docker.com/r/calcom/cal.com). 
+This image can be found on DockerHub at [https://hub.docker.com/r/calcom/cal.com](https://hub.docker.com/r/calcom/cal.com).
 
 **Note for ARM Users**: Use the {version}-arm suffix for pulling images. Example: `docker pull calcom/cal.com:v5.6.19-arm`.
 
@@ -47,7 +47,7 @@ Note: `docker compose` without the hyphen is now the primary method of using doc
 
 If you are evaluating Cal.com or running with minimal to no modifications, this option is for you.
 
-1. Clone calcom/docker. 
+1. Clone calcom/docker.
 
     ```bash
     git clone --recursive https://github.com/calcom/docker.git
@@ -101,7 +101,7 @@ If you are evaluating Cal.com or running with minimal to no modifications, this 
 
     **Note: to run in attached mode for debugging, remove `-d` from your desired run command.**
 
-6. Open a browser to [http://localhost:3000](http://localhost:3000), or your defined NEXT_PUBLIC_WEBAPP_URL. The first time you run Cal.com, a setup wizard will initialize. Define your first user, and you're ready to go!
+6. Open a browser to [http://localhost:3002](http://localhost:3002), or your defined NEXT_PUBLIC_WEBAPP_URL. The first time you run Cal.com, a setup wizard will initialize. Define your first user, and you're ready to go!
 
 ## Updating Cal.com
 
@@ -137,7 +137,7 @@ If you are evaluating Cal.com or running with minimal to no modifications, this 
     cd calcom-docker
     ```
 
-3. Update the calcom submodule. This project depends on the Cal.com source code, which is included here as a Git submodule. To make sure you get everything you need, update the submodule with the command below. 
+3. Update the calcom submodule. This project depends on the Cal.com source code, which is included here as a Git submodule. To make sure you get everything you need, update the submodule with the command below.
 
     ```bash
     git submodule update --remote --init
@@ -189,7 +189,7 @@ If you are evaluating Cal.com or running with minimal to no modifications, this 
 
     **Note: to run in attached mode for debugging, remove `-d` from your desired run command.**
 
-8. Open a browser to [http://localhost:3000](http://localhost:3000), or your defined NEXT_PUBLIC_WEBAPP_URL. The first time you run Cal.com, a setup wizard will initialize. Define your first user, and you're ready to go!
+8. Open a browser to [http://localhost:3002](http://localhost:3002), or your defined NEXT_PUBLIC_WEBAPP_URL. The first time you run Cal.com, a setup wizard will initialize. Define your first user, and you're ready to go!
 
 ## Configuration
 
@@ -201,7 +201,7 @@ These variables must also be provided at runtime
 | --- | --- | --- | --- |
 | DATABASE_URL | database url with credentials - if using a connection pooler, this setting should point there | required | `postgresql://unicorn_user:magical_password@database:5432/calendso` |
 | CALCOM_LICENSE_KEY | Enterprise License Key | optional |  |
-| NEXT_PUBLIC_WEBAPP_URL | Base URL of the site.  NOTE: if this value differs from the value used at build-time, there will be a slight delay during container start (to update the statically built files). | optional | `http://localhost:3000` |
+| NEXT_PUBLIC_WEBAPP_URL | Base URL of the site.  NOTE: if this value differs from the value used at build-time, there will be a slight delay during container start (to update the statically built files). | optional | `http://localhost:3002` |
 | NEXTAUTH_URL | Location of the auth server. By default, this is the Cal.com docker instance itself. | optional | `{NEXT_PUBLIC_WEBAPP_URL}/api/auth` |
 | NEXTAUTH_SECRET | must match build variable | required | `secret` |
 | CALENDSO_ENCRYPTION_KEY | must match build variable | required | `secret` |
@@ -219,7 +219,7 @@ Updating these variables is not required for evaluation, but is required for run
 | NEXT_PUBLIC_LICENSE_CONSENT | license consent - true/false | required | |
 | NEXTAUTH_SECRET | Cookie encryption key | required | `secret` |
 | CALENDSO_ENCRYPTION_KEY | Authentication encryption key | required | `secret` |
-| NEXT_PUBLIC_WEBAPP_URL | Base URL injected into static files | optional | `http://localhost:3000` |
+| NEXT_PUBLIC_WEBAPP_URL | Base URL injected into static files | optional | `http://localhost:3002` |
 | NEXT_PUBLIC_WEBSITE_TERMS_URL | custom URL for terms and conditions website | optional | `https://cal.com/terms` |
 | NEXT_PUBLIC_WEBSITE_PRIVACY_POLICY_URL | custom URL for privacy policy website | optional | `https://cal.com/privacy` |
 | NEXT_PUBLIC_API_V2_URL | URL for the v2 API, only required for custom integrations or custom booking experiences using [Cal.com Platform](https://cal.com/platform) | optional | |
@@ -251,13 +251,13 @@ Certain versions may have trouble creating a user if the field `metadata` is emp
 
 ### CLIENT_FETCH_ERROR
 
-If you experience this error, it may be the way the default Auth callback in the server is using the WEBAPP_URL as a base url. The container does not necessarily have access to the same DNS as your local machine, and therefor needs to be configured to resolve to itself. You may be able to correct this by configuring `NEXTAUTH_URL=http://localhost:3000/api/auth`, to help the backend loop back to itself.
+If you experience this error, it may be the way the default Auth callback in the server is using the WEBAPP_URL as a base url. The container does not necessarily have access to the same DNS as your local machine, and therefor needs to be configured to resolve to itself. You may be able to correct this by configuring `NEXTAUTH_URL=http://localhost:3002/api/auth`, to help the backend loop back to itself.
 ```
 docker-calcom-1  | @calcom/web:start: [next-auth][error][CLIENT_FETCH_ERROR]
-docker-calcom-1  | @calcom/web:start: https://next-auth.js.org/errors#client_fetch_error request to http://testing.localhost:3000/api/auth/session failed, reason: getaddrinfo ENOTFOUND testing.localhost {
+docker-calcom-1  | @calcom/web:start: https://next-auth.js.org/errors#client_fetch_error request to http://testing.localhost:3002/api/auth/session failed, reason: getaddrinfo ENOTFOUND testing.localhost {
 docker-calcom-1  | @calcom/web:start:   error: {
-docker-calcom-1  | @calcom/web:start:     message: 'request to http://testing.localhost:3000/api/auth/session failed, reason: getaddrinfo ENOTFOUND testing.localhost',
-docker-calcom-1  | @calcom/web:start:     stack: 'FetchError: request to http://testing.localhost:3000/api/auth/session failed, reason: getaddrinfo ENOTFOUND testing.localhost\n' +
+docker-calcom-1  | @calcom/web:start:     message: 'request to http://testing.localhost:3002/api/auth/session failed, reason: getaddrinfo ENOTFOUND testing.localhost',
+docker-calcom-1  | @calcom/web:start:     stack: 'FetchError: request to http://testing.localhost:3002/api/auth/session failed, reason: getaddrinfo ENOTFOUND testing.localhost\n' +
 docker-calcom-1  | @calcom/web:start:       '    at ClientRequest.<anonymous> (/calcom/node_modules/next/dist/compiled/node-fetch/index.js:1:65756)\n' +
 docker-calcom-1  | @calcom/web:start:       '    at ClientRequest.emit (node:events:513:28)\n' +
 docker-calcom-1  | @calcom/web:start:       '    at ClientRequest.emit (node:domain:489:12)\n' +
@@ -269,8 +269,8 @@ docker-calcom-1  | @calcom/web:start:       '    at emitErrorCloseNT (node:inter
 docker-calcom-1  | @calcom/web:start:       '    at processTicksAndRejections (node:internal/process/task_queues:83:21)',
 docker-calcom-1  | @calcom/web:start:     name: 'FetchError'
 docker-calcom-1  | @calcom/web:start:   },
-docker-calcom-1  | @calcom/web:start:   url: 'http://testing.localhost:3000/api/auth/session',
-docker-calcom-1  | @calcom/web:start:   message: 'request to http://testing.localhost:3000/api/auth/session failed, reason: getaddrinfo ENOTFOUND testing.localhost'
+docker-calcom-1  | @calcom/web:start:   url: 'http://testing.localhost:3002/api/auth/session',
+docker-calcom-1  | @calcom/web:start:   message: 'request to http://testing.localhost:3002/api/auth/session failed, reason: getaddrinfo ENOTFOUND testing.localhost'
 docker-calcom-1  | @calcom/web:start: }
 ```
 
